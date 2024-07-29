@@ -12,6 +12,7 @@ class HouseRequest extends Model
     protected $fillable = [
         'user_id',
         'house_id',
+        'status',
         'name',
         'phone',
         'address',

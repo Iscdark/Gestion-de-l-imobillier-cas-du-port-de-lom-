@@ -43,6 +43,7 @@
         <div class="card border-0 shadow">
             <div class="card-body">
                 <div class="row">
+                    <a href="{{ route('user.requests') }}" class="btn btn-primary mb-4">View My Requests</a>
                     @foreach($houses as $house)
                         <div class="col-md-6 col-lg-4 mb-4">
                             <div class="card">

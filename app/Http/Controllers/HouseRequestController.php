@@ -13,7 +13,11 @@ class HouseRequestController extends Controller
         $house = House::findOrFail($houseId);
         return view('house_request', compact('house'));
     }
-
+    public function userRequests()
+    {
+        $requests = HouseRequest::where('user_id', auth()->id())->paginate(10); // Pagination des demandes
+        return view('users.requests', compact('requests')); // Vue des demandes de l'utilisateur
+    }
     // Enregistrer une nouvelle demande
     public function store(Request $request)
     {

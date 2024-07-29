@@ -131,7 +131,7 @@
                             <div class="card-content">
                                 <h5 class="card-title">Notifications</h5>
                                 <p class="card-text">Envoyer des notifications aux résidents.</p>
-                                <a href="#" class="btn btn-warning">Accéder</a>
+                                <a href="{{route('requests.index')}}" class="btn btn-warning">Accéder</a>
                             </div>
                         </div>
                     </div>
