@@ -27,7 +27,7 @@ class loginController extends Controller
                 ->withInput()
                 ->withErrors($validator);
         }
-
+ 
         // Authentifier l'admin
         if (Auth::guard('admin')->attempt(['email' => $request->email, 'password' => $request->password])) {
             if (Auth::guard('admin')->user()->role != 'admin') {

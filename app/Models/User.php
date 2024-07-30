@@ -20,6 +20,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
     ];
 
     /**
@@ -46,6 +47,6 @@ class User extends Authenticatable
     }
     public function houseRequests(){
 
-        return $this->hasMany(HouseRequest::class);
+        return $this->hasMany(Requests::class);
     }
 }

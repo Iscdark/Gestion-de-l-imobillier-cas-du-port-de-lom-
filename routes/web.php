@@ -9,6 +9,10 @@ use App\Http\Controllers\UserHouseController;
 use App\Http\Controllers\admin\LoginController as AdminLoginController;
 use App\Http\Controllers\admin\RequestController as AdminRequestController;
 use App\Http\Controllers\admin\DashboardController as AdminDashboardController;
+use App\Http\Controllers\direction\LoginController as DirectionLoginController;
+use App\Http\Controllers\direction\DashboardController as DirectionDashboardController;
+use App\Http\Controllers\service\LoginController as ServiceLoginController;
+use App\Http\Controllers\service\ServiceController as ServiceDashboardController;
 use App\Http\Controllers\HouseRequestController;
 
 // Routes pour les visiteurs
@@ -54,5 +58,24 @@ Route::group(['prefix' => 'admin'], function () {
 
         Route::get('/users', [UserController::class, 'index'])->name('users.index');
         Route::delete('/users/{id}', [UserController::class, 'destroy'])->name('users.destroy');
+    });
+});
+
+Route::group(['prefix' => 'directions'], function () {
+    Route::group(['middleware' => 'dg.guest'], function () {
+        Route::get('login', [DirectionLoginController::class, 'index'])->name('direction.login');
+        Route::post('authenticate', [DirectionLoginController::class, 'authenticate'])->name('direction.authenticate');
+    });
+    Route::group(['middleware' => 'dg.auth'], function () {
+        Route::get('dashboard', [DirectionDashboardController::class, 'index'])->name('direction.dashboard');
+    });
+});
+Route::group(['prefix' => 'services'], function () {
+    Route::group(['middleware' => 'service.guest'], function () {
+        Route::get('login', [ServiceLoginController::class, 'index'])->name('service.login');
+        Route::post('authenticate', [ServiceLoginController::class, 'authenticate'])->name('service.authenticate');
+    });
+    Route::group(['middleware' => 'service.auth'], function () {
+        Route::get('dashboard', [ServiceDashboardController::class, 'index'])->name('service.dashboard');
     });
 });

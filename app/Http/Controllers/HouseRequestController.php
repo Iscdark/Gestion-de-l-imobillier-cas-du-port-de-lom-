@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\House;
-use App\Models\HouseRequest;
+use App\Models\Requests;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 class HouseRequestController extends Controller
@@ -15,7 +15,7 @@ class HouseRequestController extends Controller
     }
     public function userRequests()
     {
-        $requests = HouseRequest::where('user_id', auth()->id())->paginate(10); // Pagination des demandes
+        $requests = Requests::where('user_id', auth()->id())->paginate(10); // Pagination des demandes
         return view('users.requests', compact('requests')); // Vue des demandes de l'utilisateur
     }
     // Enregistrer une nouvelle demande
@@ -32,7 +32,7 @@ class HouseRequestController extends Controller
         ]);
 
         // Créer une nouvelle demande
-        $houseRequest = new HouseRequest();
+        $houseRequest = new Requests();
         $houseRequest->user_id = Auth::id();
         $houseRequest->house_id = $request->house_id;
         $houseRequest->name = $request->name;

@@ -13,8 +13,11 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->alias([
             'admin.guest' => \App\Http\Middleware\AdminRedirect::class,
-            'admin.auth' => \App\Http\Middleware\Adminauthenticate::class,
-
+            'admin.auth' => \App\Http\Middleware\AdminAuthenticate::class,
+            'service.auth' => \App\Http\Middleware\ServiceAuthenticate::class,
+            'dg.auth' => \App\Http\Middleware\DGAuthenticate::class,
+            'service.guest' => \App\Http\Middleware\ServiceRedirect::class,
+            'dg.guest' => \App\Http\Middleware\DGRedirect::class,
         ]);
 
         $middleware->redirectTo(
