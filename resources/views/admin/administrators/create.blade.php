@@ -3,11 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <title>Créer un Administrateur</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <title>Create House</title>
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         body {
             margin: 0;
@@ -35,6 +33,7 @@
             padding: 20px;
             box-sizing: border-box;
             color: #fff;
+            overflow-y: auto;
         }
 
         .navbar-header {
@@ -101,6 +100,14 @@
 
         .navbar .logout i {
             margin-right: 5px;
+        }
+        .content {
+            margin-left: 270px;
+            padding: 20px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            box-sizing: border-box;
         }
 
         .content {
@@ -180,7 +187,7 @@
             font-weight: bold;
         }
 
-        
+       
 
         .card-primary {
             background: linear-gradient(135deg, #4e73df, #224abe);
@@ -258,36 +265,6 @@
         .btn-custom:hover {
             background-color: #0056b3;
         }
-        .centered-container {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            background: #f0f8ff; 
-        }
-        .logo {
-            max-width: 150px; /* Ajustez la taille du logo selon vos besoins */
-            margin-bottom: 20px; /* Espace entre le logo et le titre */
-        }
-        .form-floating {
-            position: relative;
-        }
-        .btn-custom {
-            background-color: #007bff; /* Couleur de fond personnalisée */
-            color: white; /* Couleur du texte */
-            border: none; /* Supprime la bordure */
-            padding: 0.5rem 1rem; /* Réduit les dimensions */
-            font-size: 0.875rem; /* Réduit la taille de la police */
-            border-radius: 0.25rem; /* Bordure arrondie */
-        }
-        .btn-custom:hover {
-            background-color: #0056b3; /* Couleur au survol */
-        }
-        .navbar-custom {
-            background-color: rgba(255, 255, 255, 0.9); /* Fond blanc semi-transparent */
-            z-index: 1030; /* Assure que la navbar est au-dessus du reste */
-        }
     </style>
 </head>
 <body>
@@ -302,39 +279,53 @@
                 <div class="container">
                     <div class="row justify-content-center">
                         <div class="col-12 col-md-9 col-lg-7 col-xl-6 col-xxl-5">
-                            <div class="card border border-light-subtle rounded-4">
+                            <div class="card border-light-subtle rounded-4">
                                 <div class="card-body p-3 p-md-4 p-xl-5">
                                     <div class="text-center mb-4">
                                         <img src="{{ asset('images/logo-togo-port.webp') }}" alt="Logo" class="logo">
-                                        <h4 class="text-center">Create New House</h4>
+                                        <h4 class="text-center">Créer un Compte Administrateur</h4>
                                     </div>
-                                    <form action="{{ route('houses.store') }}" method="POST" enctype="multipart/form-data">
+                                    <form action="{{ route('admin.administrators.store') }}" method="POST">
                                         @csrf
                                         <div class="row gy-3 overflow-hidden">
                                             <div class="col-12">
                                                 <div class="form-floating mb-3">
-                                                    <input type="text" name="description" id="description" class="form-control" required>
-                                                    <label for="description" class="form-label">Description</label>
+                                                    <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" id="name" value="{{ old('name') }}" required>
+                                                    <label for="name">Nom</label>
+                                                    @error('name')
+                                                        <p class="invalid-feedback">{{ $message }}</p>
+                                                    @enderror
                                                 </div>
                                             </div>
                                             <div class="col-12">
                                                 <div class="form-floating mb-3">
-                                                    <select name="status" id="status" class="form-control" required>
-                                                        <option value="available">Available</option>
-                                                        <option value="occupied">Occupied</option>
-                                                        <option value="maintenance">Maintenance</option>
-                                                    </select>
-                                                    <label for="status" class="form-label">Status</label>
+                                                    <input type="email" class="form-control @error('email') is-invalid @enderror" name="email" id="email" value="{{ old('email') }}" required>
+                                                    <label for="email">Email</label>
+                                                    @error('email')
+                                                        <p class="invalid-feedback">{{ $message }}</p>
+                                                    @enderror
                                                 </div>
                                             </div>
                                             <div class="col-12">
                                                 <div class="form-floating mb-3">
-                                                    <input type="file" name="image" id="image" class="form-control">
-                                                    <label for="image" class="form-label">Image</label>
+                                                    <input type="password" class="form-control @error('password') is-invalid @enderror" name="password" id="password" required>
+                                                    <label for="password">Mot de passe</label>
+                                                    @error('password')
+                                                        <p class="invalid-feedback">{{ $message }}</p>
+                                                    @enderror
                                                 </div>
                                             </div>
-                                            <div class="col-12 d-flex justify-content-center">
-                                                <button type="submit" class="btn btn-primary">Create</button>
+                                            <div class="col-12">
+                                                <div class="form-floating mb-3">
+                                                    <input type="password" class="form-control @error('password_confirmation') is-invalid @enderror" name="password_confirmation" id="password_confirmation" required>
+                                                    <label for="password_confirmation">Confirmer le mot de passe</label>
+                                                    @error('password_confirmation')
+                                                        <p class="invalid-feedback">{{ $message }}</p>
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                            <div class="col-12 text-center">
+                                                <button type="submit" class="btn-custom">Créer l'Administrateur</button>
                                             </div>
                                         </div>
                                     </form>
@@ -344,10 +335,11 @@
                     </div>
                 </div>
             </section>
-            <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-            <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>        
-            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
         </div>
     </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
 </body>
+</html>

@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        body {
+      body {
             margin: 0;
             font-family: Arial, sans-serif;
             display: flex;
@@ -20,7 +20,6 @@
             display: flex;
             flex-direction: row;
             height: 100vh;
-            overflow: hidden;
         }
 
         .navbar {
@@ -34,7 +33,6 @@
             padding: 20px;
             box-sizing: border-box;
             color: #fff;
-            overflow-y: auto;
         }
 
         .navbar-header {
@@ -110,7 +108,6 @@
             display: flex;
             flex-direction: column;
             box-sizing: border-box;
-            overflow-y: auto; /* Permet le défilement vertical si nécessaire */
         }
 
         .header {
@@ -181,7 +178,6 @@
             font-weight: bold;
         }
 
-        
 
         .card-primary {
             background: linear-gradient(135deg, #4e73df, #224abe);
@@ -212,152 +208,130 @@
             max-height: 400px;
         }
 
-        .welcome-section {
+        .centered-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: #f0f8ff;
+        }
+
+        .logo {
+            max-width: 150px;
+            margin-bottom: 20px;
+        }
+
+        .form-floating {
+            position: relative;
+        }
+
+        .form-floating .form-control {
+            padding-left: 2.5rem;
+        }
+
+        .form-floating .form-control-icon {
+            position: absolute;
+            top: 50%;
+            left: 0.75rem;
+            transform: translateY(-50%);
+            color: #6c757d;
+        }
+
+        .invalid-feedback {
+            display: block;
+            color: #dc3545;
+        }
+
+        .btn-custom {
             background-color: #007bff;
             color: white;
-            border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 20px;
+            border: none;
+            padding: 0.5rem 1rem;
+            font-size: 0.875rem;
+            border-radius: 0.25rem;
         }
 
-        .welcome-section h1 {
-            margin-bottom: 10px;
-        }
-
-        .welcome-section p {
-            font-size: 1.2em;
-        }
-
-        .info-cards {
-            margin-bottom: 20px;
-        }
-
-        @media (max-width: 768px) {
-            .navbar {
-                width: 100%;
-                height: auto;
-                position: static;
-                border-right: none;
-                padding: 10px;
-            }
-
-            .content {
-                margin-left: 0;
-            }
-
-            .navbar-nav {
-                flex-direction: row;
-                flex-wrap: wrap;
-            }
-
-            .navbar-nav .nav-item {
-                margin-bottom: 10px;
-            }
+        .btn-custom:hover {
+            background-color: #0056b3;
         }
     </style>
 </head>
 <body>
     <div class="container-fluid">
         @include('layouts.navbar') <!-- Inclure la navbar -->
-        
+
         <!-- Contenu principal -->
         <div class="content">
-            @include('layouts.header') <!-- Inclure le header -->
-            
-            <div class="welcome-section">
-                <h1>Bienvenue sur le Dashboard Admin</h1>
-                <p>Voici un aperçu des principales statistiques et actions que vous pouvez effectuer sur le système. Utilisez les cartes ci-dessous pour accéder rapidement aux sections importantes.</p>
-            </div>
+            @include('layouts.header')
 
-            <div class="info-cards">
-                <div class="row">
-                    <div class="col-md-3 col-sm-6 mb-4">
-                        <div class="card card-primary">
-                            <div class="card-body">
-                                <i class="fas fa-home card-icon"></i>
-                                <h5 class="card-title">Maisons</h5>
-                                <p class="card-text">50 maisons disponibles</p>
-                                <div class="card-progress">
-                                    <div class="card-progress-bar" style="width: 70%;"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-3 col-sm-6 mb-4">
-                        <div class="card card-danger">
-                            <div class="card-body">
-                                <i class="fas fa-user-times card-icon"></i>
-                                <h5 class="card-title">Demandes Refusées</h5>
-                                <p class="card-text">10 demandes refusées</p>
-                                <div class="card-progress">
-                                    <div class="card-progress-bar" style="width: 20%;"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-3 col-sm-6 mb-4">
-                        <div class="card card-success">
-                            <div class="card-body">
-                                <i class="fas fa-check-circle card-icon"></i>
-                                <h5 class="card-title">Demandes Acceptées</h5>
-                                <p class="card-text">25 demandes acceptées</p>
-                                <div class="card-progress">
-                                    <div class="card-progress-bar" style="width: 50%;"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-3 col-sm-6 mb-4">
-                        <div class="card card-warning">
-                            <div class="card-body">
-                                <i class="fas fa-chart-line card-icon"></i>
-                                <h5 class="card-title">Statistiques</h5>
-                                <p class="card-text">Analyse des performances</p>
-                                <div class="card-progress">
-                                    <div class="card-progress-bar" style="width: 90%;"></div>
+            <section class="centered-container">
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-12 col-md-9 col-lg-7 col-xl-6 col-xxl-5">
+                            <div class="card border-light-subtle rounded-4">
+                                <div class="card-body p-3 p-md-4 p-xl-5">
+                                    <div class="text-center mb-4">
+                                        <img src="{{ asset('images/logo-togo-port.webp') }}" alt="Logo" class="logo">
+                                        <h4 class="text-center">Créer un Compte Utilisateur</h4>
+                                    </div>
+                                    <form action="{{ route('account.processregister') }}" method="POST">
+                                        @csrf
+                                        <div class="row gy-3 overflow-hidden">
+                                            <div class="col-12">
+                                                <div class="form-floating mb-3">
+                                                    <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" id="name" value="{{ old('name') }}" required>
+                                                    <label for="name">Nom</label>
+                                                    @error('name')
+                                                        <p class="invalid-feedback">{{ $message }}</p>
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                            <div class="col-12">
+                                                <div class="form-floating mb-3">
+                                                    <input type="email" class="form-control @error('email') is-invalid @enderror" name="email" id="email" value="{{ old('email') }}" required>
+                                                    <label for="email">Email</label>
+                                                    @error('email')
+                                                        <p class="invalid-feedback">{{ $message }}</p>
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                            <div class="col-12">
+                                                <div class="form-floating mb-3">
+                                                    <input type="password" class="form-control @error('password') is-invalid @enderror" name="password" id="password" required>
+                                                    <label for="password">Mot de Passe</label>
+                                                    @error('password')
+                                                        <p class="invalid-feedback">{{ $message }}</p>
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                            <div class="col-12">
+                                                <div class="form-floating mb-3">
+                                                    <input type="password" class="form-control @error('password_confirmation') is-invalid @enderror" name="password_confirmation" id="password_confirmation" required>
+                                                    <label for="password_confirmation">Confirmer Mot de Passe</label>
+                                                    @error('password_confirmation')
+                                                        <p class="invalid-feedback">{{ $message }}</p>
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                            <div class="col-12 text-center">
+                                                <button type="submit" class="btn-custom">Créer un Compte</button>
+                                            </div>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </section>
 
-            <div class="chart-container">
-                <h3>Statistiques des Maisons</h3>
-                <canvas id="myChart"></canvas>
-            </div>
         </div>
     </div>
 
+    <!-- Scripts -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script>
-        var ctx = document.getElementById('myChart').getContext('2d');
-        var myChart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
-                datasets: [{
-                    label: 'Maisons Demandées',
-                    data: [12, 19, 3, 5, 2, 3],
-                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                    borderColor: 'rgba(75, 192, 192, 1)',
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                }
-            }
-        });
-    </script>
 </body>
 </html>

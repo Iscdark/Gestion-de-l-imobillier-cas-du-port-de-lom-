@@ -7,8 +7,6 @@
     <link rel="stylesheet" href="https://unpkg.com/bootstrap@5.3.2/dist/css/bootstrap.min.css">
 </head>
 <body class="bg-light">
-    
-
     <div class="container mt-5">
         <div class="card border-0 shadow">
             <div class="card-body">
@@ -20,7 +18,7 @@
                                 <div class="card-body">
                                     <h5 class="card-title">Request ID: {{ $request->id }}</h5>
                                     <p class="card-text">House ID: {{ $request->house_id }}</p>
-                                    <p class="card-text">Status: {{ $request->status }}</p>
+                                    <p class="card-text">Status: {{ $request->initial_status ?? 'Not Available' }}</p>
                                 </div>
                             </div>
                         </div>

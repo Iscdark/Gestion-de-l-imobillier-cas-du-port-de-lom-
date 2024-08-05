@@ -6,12 +6,38 @@
     <title>User Dashboard</title>
     <link rel="stylesheet" href="https://unpkg.com/bootstrap@5.3.2/dist/css/bootstrap.min.css">
 </head>
-<body class="bg-light">
+<style>
+        .navbar {
+            background-color: #343a40;
+            color: #fff;
+        }
+
+        .navbar-brand {
+            font-weight: bold;
+            color: #ebe3e3;
+        }
+
+        .navbar-brand img {
+            height: 40px; /* Ajustez la hauteur en fonction de votre logo */
+            margin-right: 10px;
+        }
+
+        .navbar-nav .nav-link {
+            color: #fff;
+        }
+
+        .navbar-nav .nav-link:hover {
+            color: #e9ecef;
+        }
+
+</style>
+<body>
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-md bg-white shadow-lg">
+    <nav  class="navbar navbar-expand-md navbar-dark bg-dark">
         <div class="container">
-            <a class="navbar-brand" href="#">
-                <strong>Laravel 11 Multi Auth</strong>
+            <a class="navbar-brand" href="{{route('account.dashboard')}}">
+                <img src="{{ asset('images/logo-togo-port.webp') }}" alt="Port Logo"> <!-- Remplacez le chemin par le chemin de votre logo -->
+                <strong>User Portal</strong>
             </a>
             <button class="navbar-toggler border-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">

@@ -3,11 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liste des Administrateurs</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <title>Create House</title>
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <style>
         body {
             margin: 0;
@@ -180,7 +179,30 @@
             font-weight: bold;
         }
 
-        
+        table {
+            background-color: #ffffff;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-top: 20px;
+        }
+
+        th, td {
+            text-align: center;
+            padding: 12px;
+        }
+
+        thead {
+            background-color: #007bff;
+            color: #ffffff;
+        }
+
+        tbody tr:nth-child(odd) {
+            background-color: #f2f2f2;
+        }
+
+        tbody tr:hover {
+            background-color: #e9ecef;
+        }
 
         .card-primary {
             background: linear-gradient(135deg, #4e73df, #224abe);
@@ -258,96 +280,87 @@
         .btn-custom:hover {
             background-color: #0056b3;
         }
-        .centered-container {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            background: #f0f8ff; 
-        }
-        .logo {
-            max-width: 150px; /* Ajustez la taille du logo selon vos besoins */
-            margin-bottom: 20px; /* Espace entre le logo et le titre */
-        }
-        .form-floating {
-            position: relative;
-        }
-        .btn-custom {
-            background-color: #007bff; /* Couleur de fond personnalisée */
-            color: white; /* Couleur du texte */
-            border: none; /* Supprime la bordure */
-            padding: 0.5rem 1rem; /* Réduit les dimensions */
-            font-size: 0.875rem; /* Réduit la taille de la police */
-            border-radius: 0.25rem; /* Bordure arrondie */
-        }
-        .btn-custom:hover {
-            background-color: #0056b3; /* Couleur au survol */
-        }
-        .navbar-custom {
-            background-color: rgba(255, 255, 255, 0.9); /* Fond blanc semi-transparent */
-            z-index: 1030; /* Assure que la navbar est au-dessus du reste */
-        }
     </style>
 </head>
 <body>
-    <div class="container-fluid">
-        @include('layouts.navbar') <!-- Inclure la navbar -->
+    <!-- Inclure la navbar -->
+    @include('layouts.navbar')
 
-        <!-- Contenu principal -->
+    <!-- Contenu principal -->
+    <div class="container-fluid mt-5">
+        <!-- Inclure le header -->
+        @include('layouts.header')
+
         <div class="content">
-            @include('layouts.header')
+            <h1 class="mb-4">Liste des Administrateurs</h1>
 
-            <section class="centered-container">
-                <div class="container">
-                    <div class="row justify-content-center">
-                        <div class="col-12 col-md-9 col-lg-7 col-xl-6 col-xxl-5">
-                            <div class="card border border-light-subtle rounded-4">
-                                <div class="card-body p-3 p-md-4 p-xl-5">
-                                    <div class="text-center mb-4">
-                                        <img src="{{ asset('images/logo-togo-port.webp') }}" alt="Logo" class="logo">
-                                        <h4 class="text-center">Create New House</h4>
-                                    </div>
-                                    <form action="{{ route('houses.store') }}" method="POST" enctype="multipart/form-data">
-                                        @csrf
-                                        <div class="row gy-3 overflow-hidden">
-                                            <div class="col-12">
-                                                <div class="form-floating mb-3">
-                                                    <input type="text" name="description" id="description" class="form-control" required>
-                                                    <label for="description" class="form-label">Description</label>
-                                                </div>
-                                            </div>
-                                            <div class="col-12">
-                                                <div class="form-floating mb-3">
-                                                    <select name="status" id="status" class="form-control" required>
-                                                        <option value="available">Available</option>
-                                                        <option value="occupied">Occupied</option>
-                                                        <option value="maintenance">Maintenance</option>
-                                                    </select>
-                                                    <label for="status" class="form-label">Status</label>
-                                                </div>
-                                            </div>
-                                            <div class="col-12">
-                                                <div class="form-floating mb-3">
-                                                    <input type="file" name="image" id="image" class="form-control">
-                                                    <label for="image" class="form-label">Image</label>
-                                                </div>
-                                            </div>
-                                            <div class="col-12 d-flex justify-content-center">
-                                                <button type="submit" class="btn btn-primary">Create</button>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-            <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>        
-            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+            @if(session('success'))
+                <div class="alert alert-success">{{ session('success') }}</div>
+            @endif
+
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Nom</th>
+                        <th>Email</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($admins as $admin)
+                        <tr>
+                            <td>{{ $admin->name }}</td>
+                            <td>{{ $admin->email }}</td>
+                            <td>
+                                <a href="{{ route('admin.administrators.edit', $admin->id) }}" class="btn btn-warning btn-sm">
+                                    <i class="fas fa-edit"></i> Modifier
+                                </a>
+                                <form action="{{ route('admin.administrators.destroy', $admin->id) }}" method="POST" style="display:inline;">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger delete-btn btn-sm">
+                                        <i class="fas fa-trash"></i> Supprimer
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+
+            <!-- Pagination -->
+            {{ $admins->links() }}
         </div>
     </div>
+    <script>            document.querySelectorAll('.delete-btn').forEach(button => {
+        button.addEventListener('click', function(event) {
+            event.preventDefault();
+            Swal.fire({
+                title: 'Êtes-vous sûr ?',
+                text: "Vous ne pourrez pas revenir en arrière après cela !",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Oui, supprimer !',
+                cancelButtonText: 'Annuler'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    this.closest('form').submit();
+                    Swal.fire({
+                        title: 'Succès',
+                        text: 'L\'utilisateur a bien été supprimé !',
+                        icon: 'success',
+                        confirmButtonText: 'OK'
+                    });
+                }
+            });
+        });
+    });
+    </script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
+</html>

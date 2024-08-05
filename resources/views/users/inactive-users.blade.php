@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Admin</title>
+    <title>Utilisateurs Désactivés</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -15,12 +15,6 @@
             flex-direction: column;
             min-height: 100vh;
             background-color: #f8f9fa;
-        }
-
-        .container-fluid {
-            display: flex;
-            flex-direction: row;
-            height: 100vh;
         }
 
         .navbar {
@@ -35,6 +29,7 @@
             box-sizing: border-box;
             color: #fff;
             overflow-y: auto;
+            z-index: 1000; /* Assurez-vous que la navbar est au-dessus des autres éléments */
         }
 
         .navbar-header {
@@ -102,13 +97,13 @@
         .navbar .logout i {
             margin-right: 5px;
         }
+
         .content {
-            margin-left: 270px;
+            margin-left: 270px; /* Ajuste pour compenser la largeur de la navbar */
             padding: 20px;
             flex: 1;
-            display: flex;
-            flex-direction: column;
             box-sizing: border-box;
+            z-index: 1; /* Assurez-vous que le contenu est au-dessus de la navbar */
         }
 
         .header {
@@ -179,6 +174,7 @@
             font-weight: bold;
         }
 
+
         .card-primary {
             background: linear-gradient(135deg, #4e73df, #224abe);
             color: #fff;
@@ -214,6 +210,9 @@
             border-radius: 8px;
             overflow: hidden;
             margin-top: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            z-index: 1; /* Assurez-vous que le tableau est au-dessus de la navbar */
         }
 
         th, td {
@@ -241,111 +240,51 @@
     </style>
 </head>
 <body>
-    <div class="container-fluid">
-        @include('layouts.navbar') <!-- Inclure la navbar -->
+    @include('layouts.navbar') <!-- Inclure la navbar -->
 
-        <!-- Contenu principal -->
-        <div class="content">
-            @include('layouts.header')
+    <div class="content">
+        <h1 class="mb-4 text-center">Utilisateurs Désactivés</h1>
 
-            <div class="container mt-5">
-                <h1 class="mb-4 text-center">Gérer Les utilisateurs </h1>
+        @if(session('success'))
+            <div class="alert alert-success">{{ session('success') }}</div>
+        @endif
 
-                @if(session('success'))
-                    <div class="alert alert-success">{{ session('success') }}</div>
-                @endif
-
-                @if(session('error'))
-                    <div class="alert alert-danger">{{ session('error') }}</div>
-                @endif
-
-                <table class="table table-striped">
-                    <thead>
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($users as $user)
                         <tr>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Role</th>
-                            <th>Actions</th>
+                            <td>{{ $user->name }}</td>
+                            <td>{{ $user->email }}</td>
+                            <td>
+                                <a class="btn btn-success activate-btn" href="{{ route('admin.users.activate', $user->id) }}">Activer</a>
+                            </td>
                         </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($users as $user)
-                            @if($user->role === 'user')
-                                <tr>
-                                    <td>{{ $user->name }}</td>
-                                    <td>{{ $user->email }}</td>
-                                    <td>{{ $user->role }}</td>
-                                    <td>
-                                        <form action="{{ route('users.destroy', $user->id) }}" method="POST" style="display:inline;">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button class="btn btn-danger btn-sm delete-btn btn-icon" title="Supprimer">
-                                                <i class="fas fa-trash-alt"></i>
-                                            </button>
-                                        </form>
-                                        @if($user->is_active)
-                                            <a class="btn btn-danger activate-btn btn-icon" href="{{ route('admin.users.deactivate', $user->id) }}" title="Désactiver">
-                                                <i class="fas fa-user-times"></i>
-                                            </a>
-                                        @else
-                                            <a class="btn btn-success deactivate-btn btn-icon" href="{{ route('admin.users.activate', $user->id) }}" title="Activer">
-                                                <i class="fas fa-user-check"></i>
-                                            </a>
-                                        @endif
-                                    </td>
-                                </tr>
-                            @endif
-                        @endforeach
-                    </tbody>
-                </table>
-
-                <!-- Pagination -->
-                {{ $users->links() }}
-            </div>
+                    @endforeach
+                </tbody>
+            </table>
         </div>
+
+        <!-- Pagination -->
+        {{ $users->links() }}
     </div>
 
     <!-- Scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            function showSuccessMessage(action) {
-                Swal.fire({
-                    title: 'Succès',
-                    text: `L'utilisateur a bien ${action} !`,
-                    icon: 'success',
-                    confirmButtonText: 'OK'
-                });
-            }
-
-            // Pour le bouton "Activer"
             document.querySelectorAll('.activate-btn').forEach(button => {
-                button.addEventListener('click', function(event) {
-                    event.preventDefault();
-                    Swal.fire({
-                        title: 'Êtes-vous sûr ?',
-                        text: "Voulez-vous désactiver cet utilisateur ?",
-                        icon: 'warning',
-                        showCancelButton: true,
-                        confirmButtonColor: '#3085d6',
-                        cancelButtonColor: '#d33',
-                        confirmButtonText: 'Oui, désactiver !',
-                        cancelButtonText: 'Annuler'
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            window.location.href = this.href;
-                            showSuccessMessage('été désactiver');
-                        }
-                    });
-                });
-            });
-
-            // Pour le bouton "Désactiver"
-            document.querySelectorAll('.deactivate-btn').forEach(button => {
                 button.addEventListener('click', function(event) {
                     event.preventDefault();
                     Swal.fire({
@@ -359,35 +298,7 @@
                         cancelButtonText: 'Annuler'
                     }).then((result) => {
                         if (result.isConfirmed) {
-                            window.location.href = this.href;
-                            showSuccessMessage('été activer');
-                        }
-                    });
-                });
-            });
-
-            // Pour le bouton "Supprimer"
-            document.querySelectorAll('.delete-btn').forEach(button => {
-                button.addEventListener('click', function(event) {
-                    event.preventDefault();
-                    Swal.fire({
-                        title: 'Êtes-vous sûr ?',
-                        text: "Vous ne pourrez pas revenir en arrière après cela !",
-                        icon: 'warning',
-                        showCancelButton: true,
-                        confirmButtonColor: '#3085d6',
-                        cancelButtonColor: '#d33',
-                        confirmButtonText: 'Oui, supprimer !',
-                        cancelButtonText: 'Annuler'
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            this.closest('form').submit();
-                            Swal.fire({
-                                title: 'Succès',
-                                text: 'L\'utilisateur a bien été supprimé !',
-                                icon: 'success',
-                                confirmButtonText: 'OK'
-                            });
+                            window.location.href = button.href;
                         }
                     });
                 });

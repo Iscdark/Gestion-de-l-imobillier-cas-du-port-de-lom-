@@ -35,7 +35,7 @@ class CreateRequestsTable extends Migration
             
             // Colonnes pour les détails de la demande
             $table->string('motif')->nullable();
-            $table->string('letter')->nullable();
+            $table->string('letter');
             
             $table->timestamps();
         });

@@ -10,4 +10,8 @@ class DashboardController extends Controller
     public function index(){
         return view('admin.dashboard') ;
     }
+    public function createUser()
+        {
+            return view('users.create_user'); // Assurez-vous que ce fichier Blade existe
+        }
 }

@@ -11,8 +11,8 @@ class RequestController extends Controller
     public function index()
     {
         // Utilisation du modèle HouseRequest pour obtenir les demandes avec les relations user et house
-        $requests = Requests::with('user', 'house')->paginate(10);
-        return view('requests.index', compact('requests'));
+        $requests = Requests::whereIn('dg_status', ['approved', 'rejected'])->get();
+        return view('Requests.index', compact('requests'));
     }
 
     public function updateStatus(HttpRequest $request, $id)
